@@ -1,7 +1,11 @@
 import { arrNumbers } from '../data/Numbers';
 import usePagination from '../assets/hooks/usePagination';
+import { useState } from 'react';
 
 function UsePagination(){
+
+const [itemsPerPage, setItemsPerPage] = useState(10);
+    
     const {
         canPrevPage,
         canNextPage,
@@ -13,19 +17,33 @@ function UsePagination(){
         startIndex,
         totalPages,
         currentPage
-    } = usePagination(arrNumbers.length,10)
+    } = usePagination(arrNumbers.length, 10)
 
     console.log(startIndex, endIndex, canNextPage, canPrevPage);
 
+    // TODO: map over the currentItems and show each item 
     const visibleItems = arrNumbers.slice(startIndex, endIndex+1);
 
 
     return(
         <div>
-            <h2>Pagination Demo</h2>
-            
+            <h2>Pagination Demo</h2> 
+            <label htmlFor="">Items per page:  </label>           
 
             {/* <h2>{currentPage} of {totalPages}</h2> */}
+
+        <select
+          value={itemsPerPage}
+          onChange={(e) => setItemsPerPage(parseInt(e.target.value))}
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
+
+        <div>Total Items: </div>
+            
 
         <p>
             Showing <strong>{itemsOnCurrentPage}</strong> items | Page{" "}
@@ -46,8 +64,6 @@ function UsePagination(){
              {/* {totalPages.map(page => (
                 <button>{page}</button>
              ))} */}
-
-            
 
              {/* Optional: Jump to specific page */}
         <div>
